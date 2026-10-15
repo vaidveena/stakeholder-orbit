@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Map stakeholders and turn influence, interest, and sentiment into an actionable engagement plan." />
+    <title>Stakeholder Orbit</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <nav>
+        <a class="brand" href="#">Stakeholder <span>Orbit</span></a>
+        <button id="load-example" class="button ghost" type="button">Load example</button>
+      </nav>
+      <div class="hero-copy">
+        <p class="eyebrow">A local-first TPM tool</p>
+        <h1>See who can move your project—and how to engage them.</h1>
+        <p>Map influence, interest, and sentiment. Get a focused communication plan without turning people into a spreadsheet.</p>
+      </div>
+    </header>
+
+    <main>
+      <section class="metrics" aria-label="Stakeholder summary">
+        <article><strong id="metric-total">0</strong><span>stakeholders</span></article>
+        <article><strong id="metric-close">0</strong><span>manage closely</span></article>
+        <article><strong id="metric-watch">0</strong><span>attention needed</span></article>
+        <article><strong id="metric-coverage">0%</strong><span>owner coverage</span></article>
+      </section>
+
+      <section class="workspace">
+        <aside class="panel form-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Add context</p>
+              <h2 id="form-title">Add a stakeholder</h2>
+            </div>
+          </div>
+          <form id="stakeholder-form">
+            <input id="stakeholder-id" type="hidden" />
+            <label>Name <input id="name" required maxlength="40" placeholder="e.g. Maya Chen" /></label>
+            <label>Role <input id="role" required maxlength="60" placeholder="e.g. VP, Customer Experience" /></label>
+            <div class="field-row">
+              <label>Influence
+                <select id="influence">
+                  <option value="1">1 · Low</option><option value="2">2</option><option value="3" selected>3</option><option value="4">4</option><option value="5">5 · High</option>
+                </select>
+              </label>
+              <label>Interest
+                <select id="interest">
+                  <option value="1">1 · Low</option><option value="2">2</option><option value="3" selected>3</option><option value="4">4</option><option value="5">5 · High</option>
+                </select>
+              </label>
+            </div>
+            <label>Current sentiment
+              <select id="sentiment">
+                <option value="champion">Champion</option>
+                <option value="supportive">Supportive</option>
+                <option value="neutral" selected>Neutral</option>
+                <option value="concerned">Concerned</option>
+                <option value="resistant">Resistant</option>
+              </select>
+            </label>
+            <label>Relationship owner <input id="owner" maxlength="40" placeholder="Who will engage them?" /></label>
+            <label>What matters to them <textarea id="priority" rows="3" maxlength="180" placeholder="Outcome, concern, or success measure"></textarea></label>
+            <div class="form-actions">
+              <button class="button primary" type="submit"><span id="submit-label">Add to orbit</span></button>
+              <button id="cancel-edit" class="button ghost hidden" type="button">Cancel</button>
+            </div>
+          </form>
+        </aside>
+
+        <section class="panel map-panel">
+          <div class="panel-heading">
+            <div><p class="eyebrow">Influence × interest</p><h2>Your stakeholder map</h2></div>
+            <span class="privacy">Saved in this browser</span>
+          </div>
+          <div class="orbit-wrap">
+            <div class="axis-label axis-y">Influence →</div>
+            <svg id="orbit-map" viewBox="0 0 720 480" role="img" aria-label="Stakeholder influence and interest map">
+              <rect class="quadrant q-monitor" x="40" y="240" width="320" height="200" rx="18" />
+              <rect class="quadrant q-inform" x="360" y="240" width="320" height="200" rx="18" />
+              <rect class="quadrant q-satisfy" x="40" y="40" width="320" height="200" rx="18" />
+              <rect class="quadrant q-close" x="360" y="40" width="320" height="200" rx="18" />
+              <g class="quadrant-labels">
+                <text x="60" y="70">KEEP SATISFIED</text><text x="380" y="70">MANAGE CLOSELY</text>
+                <text x="60" y="270">MONITOR</text><text x="380" y="270">KEEP INFORMED</text>
+              </g>
+              <g id="map-points"></g>
+            </svg>
+            <div class="axis-label axis-x">Interest →</div>
+            <p id="map-empty" class="empty-message">Add a stakeholder or load the example to bring the map to life.</p>
+          </div>
+          <div class="legend"><span><i class="dot champion"></i>Champion</span><span><i class="dot neutral"></i>Neutral</span><span><i class="dot concerned"></i>Concerned</span></div>
+        </section>
+      </section>
+
+      <section class="panel plan-panel">
+        <div class="panel-heading">
+          <div><p class="eyebrow">From map to motion</p><h2>Engagement plan</h2></div>
+          <div class="panel-actions">
+            <button id="copy-brief" class="button ghost" type="button">Copy executive brief</button>
+            <button id="download-plan" class="button primary" type="button">Export plan</button>
+          </div>
+        </div>
+        <div id="attention-banner" class="attention hidden"></div>
+        <div id="plan-list" class="plan-list"></div>
+        <p id="plan-empty" class="empty-state">Your tailored engagement actions will appear here.</p>
+      </section>
+    </main>
+
+    <footer><p>Built for thoughtful project leadership. Your data never leaves your browser.</p></footer>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
